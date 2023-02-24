@@ -14,6 +14,9 @@
 # `Bot Images:`
 
 ![resim](https://user-images.githubusercontent.com/98545753/221291339-d3f466c6-fa5b-4a1b-b6b3-50048a8e2953.png)
+![resim](https://user-images.githubusercontent.com/98545753/221291784-4e25cb8e-f94c-4636-81e0-25060704ac50.png)
+
+
 
 
 
