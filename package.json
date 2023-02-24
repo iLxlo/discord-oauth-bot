@@ -1,0 +1,22 @@
+{
+  "name": "recode-newauth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "chalk": "^4.0.0",
+    "discord.js": "^14.7.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.6.5",
+    "passport": "^0.6.0",
+    "passport-discord": "^0.1.4",
+    "request-ip": "^3.3.0"
+  }
+}
