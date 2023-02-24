@@ -10,4 +10,9 @@
 
 `-` We want to add more features so if you want to any idea abt it #⤷﹒suggest and dont forget to star it [Support](https://discord.gg/4BZ4tCpnfT)
 
+
+![resim](https://user-images.githubusercontent.com/98545753/221291339-d3f466c6-fa5b-4a1b-b6b3-50048a8e2953.png)
+
+
+
 Coded by Rowy & iLxlo :)
