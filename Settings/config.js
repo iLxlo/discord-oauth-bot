@@ -2,8 +2,8 @@ module.exports = {
 
     token: 'MTA1MDg1OTU2MTcwMTA4MTE2MA.G6pXjc.mR4UxmnyfDJqdCYOJIhEAzWTU8oqAVF9HTUEMw',
     
-    authDevelopers: ['1032357870353784862','1043550134249726012'], // değiştirme auth geliştiricileri
-    authOwners: ['1046816796344340561'], // auth sahibi
+    authDevelopers: ['1032357870353784862','1043550134249726012'], // developers
+    authOwners: ['1046816796344340561'], // whitelist
 
     webhook: {
         name: 'AuthCord',
@@ -16,8 +16,8 @@ module.exports = {
         secret: "sQd7ZcZpmxLhHfQlDVsNG42SLxtlDIHV",
         redirect_uri: "http://93.190.8.234:319/auth/discord/callback",
         scope: ['identify', 'guilds.join'],
-        footer: "AuthCord v1.0", // değiştirme
-        serverLink: "https://discord.gg/badge", // değiştirme
+        footer: "AuthCord v1.0", // footer
+        serverLink: "https://discord.gg/badge", // server
     },
 
     web: {
