@@ -1,5 +1,5 @@
 # Discord-Auth-Bot
-![image](https://user-images.githubusercontent.com/98545753/221368700-a24e5802-6609-49db-8c1d-1707c08ea596.png)
+![image](https://user-images.githubusercontent.com/98545753/221368751-a07e8eea-ff4b-4525-a294-66c3df973b7b.png)
 
 # Features :
 
