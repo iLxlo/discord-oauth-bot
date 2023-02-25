@@ -1,6 +1,6 @@
 /* Core API */
 const Discord = require('discord.js');
-const { EmbedBuilder, InteractionType, ActionRowBuilder, ButtonBuilder, SelectMenuBuilder, ButtonStyle, ModalBuilder, TextInputStyle, TextInputBuilder, Collection } = require("discord.js");
+const { EmbedBuilder, InteractionType, ActionRowBuilder, ButtonBuilder, StringSelectMenuBuilder, ButtonStyle, ModalBuilder, TextInputStyle, TextInputBuilder, Collection } = require("discord.js");
 
 /* Core Database */
 const botSchema = require('../Schema/botSchema');
@@ -48,7 +48,7 @@ module.exports = async (interaction, client) => {
 
     /* Core Whitelist Builder */
 
-    let menu1 = new SelectMenuBuilder()
+    let menu1 = new StringSelectMenuBuilder()
       .setCustomId("menu1")
       .setPlaceholder(interaction.locale == "tr" ? "🔨 Bir seçenek seçin" : interaction.locale == "fr" ? "🔨 Sélectionnez une option" : "🔨 Select an option")
       .addOptions({
@@ -246,7 +246,7 @@ module.exports = async (interaction, client) => {
           .setDisabled(page === maxPage - 1)
       )
 
-    let menu1 = new SelectMenuBuilder()
+    let menu1 = new StringSelectMenuBuilder()
       .setCustomId("menu1")
       .setPlaceholder(interaction.locale == "tr" ? "🔨 Bir seçenek seçin" : interaction.locale == "fr" ? "🔨 Sélectionnez une option" : "🔨 Select an option")
       .addOptions({
