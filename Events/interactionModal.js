@@ -1,6 +1,6 @@
 /* Core API */
 const Discord = require('discord.js');
-const { EmbedBuilder, InteractionType, StringStringSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, componentType } = require("discord.js");
+const { EmbedBuilder, InteractionType, StringSelectMenuBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, componentType } = require("discord.js");
 
 /* Core Database */
 const botSchema = require('../Schema/botSchema');
