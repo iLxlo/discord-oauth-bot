@@ -357,7 +357,7 @@ module.exports = async (interaction, client) => {
 
     let row = new ActionRowBuilder()
       .addComponents(
-        new SelectMenuBuilder()
+        new StringSelectMenuBuilder()
           .setCustomId("selectJoinUsers")
           .setPlaceholder(interaction.locale == "tr" ? "Sunucu Seç" : interaction.locale == "fr" ? "Sélectionnez le serveur" : "Select Server")
           .addOptions(options)

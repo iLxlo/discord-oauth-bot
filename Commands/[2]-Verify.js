@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ComponentType, ButtonStyle } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ComponentType, ButtonStyle } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const config = require('../Settings/config')
 const botSchema = require('../Schema/botSchema');
@@ -35,7 +35,7 @@ module.exports = {
       const row = new ActionRowBuilder()
     .addComponents(
 
-      new SelectMenuBuilder()
+      new StringSelectMenuBuilder()
       .setCustomId("menu12")
       .setPlaceholder(interaction.locale == "tr" ? "🔨 Bir seçenek seçin" : interaction.locale == "fr" ? "🔨 Sélectionnez une option" : "🔨 Select an option")
       .addOptions(

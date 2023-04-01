@@ -1,4 +1,4 @@
-const { EmbedBuilder, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const botSchema = require('../Schema/botSchema');
 const config = require('../Settings/config');
@@ -32,7 +32,7 @@ module.exports = {
       let whitelist = data.whitelist.find(x => x.id === interaction.user.id)
       if(!config.authDevelopers.includes(interaction.user.id) && !config.authOwners.includes(interaction.user.id) && whitelist?.id !== interaction.user.id) return interaction.reply({ ephemeral: true, embeds: [embed], components: [row31]})
   
-      let menu1 = new SelectMenuBuilder()
+      let menu1 = new StringSelectMenuBuilder()
         .setCustomId("menu1")
         .setPlaceholder(interaction.locale == "tr" ? "🔨 Bir seçenek seçin" : interaction.locale == "fr" ? "🔨 Sélectionnez une option" : "🔨 Select an option")
         .addOptions({

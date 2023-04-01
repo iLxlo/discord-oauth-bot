@@ -1,4 +1,4 @@
-const { EmbedBuilder, codeBlock, ActionRowBuilder, SelectMenuBuilder, ButtonBuilder, ButtonStyle, componentType } = require("discord.js");
+const { EmbedBuilder, codeBlock, ActionRowBuilder, StringSelectMenuBuilder, ButtonBuilder, ButtonStyle, componentType } = require("discord.js");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const config = require('../Settings/config')
 
