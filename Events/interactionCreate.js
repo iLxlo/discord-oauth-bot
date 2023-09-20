@@ -420,19 +420,19 @@ module.exports = async (interaction, client) => {
     scd = scd * 7500;
     let guild = client.guilds.cache.get(client.newCollection.get(client.user.id).id);
 
-    if(!guild) return // düzelt burayı sikmim
+    if (!guild) return // düzelt burayı sikmim
 
-    let button_ = new ActionRowBuilder()			
-    .addComponents(
-      new ButtonBuilder()
-        .setCustomId('cancelProgress')
-        .setLabel('Cancel')
-        .setStyle(ButtonStyle.Danger),
-    );
+    let button_ = new ActionRowBuilder()
+      .addComponents(
+        new ButtonBuilder()
+          .setCustomId('cancelProgress')
+          .setLabel('Cancel')
+          .setStyle(ButtonStyle.Danger),
+      );
 
     let embed_ = new EmbedBuilder()
-    .setFooter({ text: `${config.client.footer} ・ ${config.client.serverLink}`})
-    .setColor('Random')
+      .setFooter({ text: `${config.client.footer} ・ ${config.client.serverLink}` })
+      .setColor('Random')
 
     let time = msToTime(scd)
     interaction.update({
