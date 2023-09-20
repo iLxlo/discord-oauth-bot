@@ -5,7 +5,7 @@
 
 `-` Advanced panel command (joins, users, wl, main page) in one command with discord select menu
 
-`-` Auto refresh every 12h (MongoDB)
+`-` Auto refresh every 12h (MongoDB) [outdated]
 
 `-` Support discord modal (you need to type Server id & Amount)
 
