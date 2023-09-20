@@ -16,14 +16,24 @@ const commands = []; /* Commands Array */
 
 module.exports = function (client) {
 
-    const slashcommander = client.fs.readdirSync('./Commands').filter(file => file.endsWith('.js'));
-    console.log("[" + client.chalk.magenta("+") + "] InteractionContent Loading...")
-    for (const files of slashcommander) {
-    const command = require(`../Commands/${files}`);
-    client.slashcommands.set(command.data.name, command);
-    console.log("[" + client.chalk.green("+") + "] Slash Command loaded " + client.chalk.green(command.data.name) + ` (${command.enabled ? client.chalk.green("Command Enabled") : client.chalk.red("Command Disabled")})`)
-    commands.push(command.data.toJSON());
-    };
+   const slashCommands = client.fs.readdirSync('./Commands').filter(file => file.endsWith('.js'));
+console.log(`[${client.chalk.magenta('+')}] InteractionContent Loading...`);
+const commands = [];
+
+for (const file of slashCommands) {
+  try {
+    const command = require(`../Commands/${file}`);
+    if (command.data) {
+      client.slashcommands.set(command.data.name, command);
+      console.log(`[${client.chalk.green('+')}] Slash Command loaded ${client.chalk.green(command.data.name)} Command Enabled`);
+      commands.push(command.data.toJSON());
+    } else {
+      console.log(`${client.chalk.red('[-]')} ${file} is missing data`);
+    }
+  } catch (err) {
+    console.log(`${client.chalk.red('[-]')} Error loading ${file}: ${err}`);
+  }
+}
 
     const requestEvent = (event) => require(`../Events/${event}`)
     client.on('interactionCreate', (interactionCreate) => requestEvent('interactionHandler')(interactionCreate, client));
