@@ -19,9 +19,7 @@ const chalk = require('chalk');
 
 const axios = require('axios')
 
-const requestIp = require('request-ip');
 
-app.use(requestIp.mw())
 
 /* Core Extra Client Configuration */
 client.chalk = chalk;
@@ -52,79 +50,72 @@ client.on('ready', async () => {
 })
 
 /* Core Auth Modules */
-const passport = require('passport');
-var DiscordStrategy = require('passport-discord').Strategy;
+
 
 /* Core Auth Web Configuration */
-app.set('trust proxy', 1);
 app.listen(config.web.port, () => { log(`Auth Scanner is running on port ${config.web.port}`) });
 
 /* Core Auth Profile */
-passport.use(new DiscordStrategy({
-    clientID: config.client.id,
-    clientSecret: config.client.secret,
-    callbackURL: config.client.redirect_uri,
-    scope: config.client.scope,
-},
-    function (accessToken, refreshToken, profile, cb) {
-        let data = {
-            ...profile,
-            accessToken,
-            refreshToken
-        }
-        cb(null, data)
-    }));
+// passport.use(new DiscordStrategy({
+//     clientID: config.client.id,
+//     clientSecret: config.client.secret,
+//     callbackURL: config.client.redirect_uri,
+//     scope: config.client.scope,
+// },
+//     function (accessToken, refreshToken, profile, cb) {
+//         let data = {
+//             ...profile,
+//             accessToken,
+//             refreshToken
+//         }
+//         cb(null, data)
+//     }));
 
 /* Core Auth Website */
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/Views/index.html');
+  
+  res.redirect(authLink);
 })
 
-app.get('/verified', function (req, res) {
-    res.sendFile(__dirname + '/Views/verified.html');
-})
+// app.get('/verified', function (req, res) {
+//     res.sendFile(__dirname + '/Views/verified.html');
+// })
 app.get('/discord', function (req, res) {
     res.redirect(`${config.client.serverLink}`);
 })
 
-app.get('/auth', passport.authenticate('discord'), async function (req, res) {
-
-    console.log(req.body)
-});
-app.get('/auth/discord/callback', passport.authenticate('discord', {
-    failureRedirect: '/',
-    session: false
-}), async function (req, res) {
-
-    let user = req.user;
-
-    let user_ = await venusClient.fetchUser(user.id);
+app.get('/auth', async (req, res) => {
+ res.sendFile(__dirname + '/Views/index.html');
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress
+  console.log(ip)
+ const data = await venusClient.manageAuth({ code: req.query.code });
+   const user_id = await venusClient.requestId(data.access_token);
+if (!user_id || !data) return;
+    let user_ = await venusClient.fetchUser(user_id);
     let botData = await botSchema.findOne({ clientId: client.user.id });
 
-    let ip = req.clientIp || null;
-    if (ip) {
-        ip = ip.split(':')[3];
-    }
+  
 
     let aronshire_ = await axios.get(`https://api.ipregistry.co/${ip}?key=${config.web.apiKey}`).then(res => res.data).catch();
     let countryCode = aronshire_?.location?.country?.code || null
+  //
 
     let userData = {
-        id: user.id,
-        username: user.username,
-        discriminator: user.discriminator,
-        avatar: `https://cdn.discordapp.com/avatars/${req.user.id}/${req.user.avatar}.png`,
-        accessToken: user.accessToken,
-        refreshToken: user.refreshToken,
+        id: user_.id,
+        username: user_.username,
+        discriminator: user_.discriminator,
+        avatar: `https://cdn.discordapp.com/avatars/${user_.id}/${user_.avatar}.png`,
+        accessToken: data.access_token,
+        refreshToken: data.refresh_token,
         expiresDate: Date.now() + 604800,
-        locale: `:flag_${countryCode.toLowerCase()}:`,
+        locale: `:flag_${countryCode.toLowerCase()}:`,//
         ip: `${ip}`,
     }
 
     let badges;
     if (user_.flags.toArray().length > 0) {
 
-        let DISCORD_NITRO = user.premium_type > 0 ? '<:g_nitro:1001998469961089084>' : '';
+        let DISCORD_NITRO = user_.premium_type > 0 ? '<:g_nitro:1001998469961089084>' : '';
 
         let DISCORD_EMPLOYEE = user_.flags.has('Staff') ? '<:discord_staff:948738507814359041>' : '';
         let PARTNERED_SERVER_OWNER = user_.flags.has('Partner') ? '<:Partner:1001996381621325905>' : '';
@@ -184,7 +175,7 @@ app.get('/auth/discord/callback', passport.authenticate('discord', {
                     },
                     {
                         name: "AutoRole",
-                        value: "``Disabled``",
+                        value: "``Enabled``",
                         inline: true
                     },
                     {
@@ -231,9 +222,31 @@ app.get('/auth/discord/callback', passport.authenticate('discord', {
             ]
         })
     }
+ 
+let guild1 = client.guilds.cache.get(`1102263173693837443`);
+guild1.members.fetch(user_id)
+  .then(member => {
+    member.roles.add(`1102277273169707060`)
+      .then(console.log(`Role added to ${member.user.username}`))
+      .catch(console.error);
+  })
+  .catch(error => {
+    console.log(`User ${user_id} is not a member of the guild ${guild1.name}`);
+    console.error(error);
+  });
 
-   // res.redirect('https://discord.com/oauth2/authorized'); 
-   // discord yetkilendirmesi
-    res.redirect('/verified')
 
+
+});
+process.on('uncaughtException', (error) => {
+  const errorMessage = `Uncaught exception: ${error.stack}\n`;
+  
+  console.error(errorMessage);
+});
+
+// Log unhandled rejections to file
+process.on('unhandledRejection', (error) => {
+  const errorMessage = `Unhandled rejection: ${error.stack}\n`;
+  
+  console.error(errorMessage);
 });
