@@ -31,8 +31,8 @@ module.exports = {
       let embed = new EmbedBuilder()
       .setTitle("💯 About")
       .setDescription(`
-The bot was created by \`Rowy#1348\`.
-Invite it by clicking the button below or join our Discord server.`)
+The bot was created by \`Rowy, iLxloo\`.
+Invite it by clicking the button below or join our Discord server.\n\n Thanks to epic for fixing bugs.`)
       await interaction.reply({ ephemeral: true, components: [row], embeds: [embed]})
 
     }
