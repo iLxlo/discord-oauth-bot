@@ -105,9 +105,45 @@ class AuthClient {
         return request;
     
     }
+  async requestId(access_token) {
+  try {
+    const fetched = await fetch("https://discord.com/api/users/@me", {
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    });
+    const json = await fetched.json();
+    return json.id;
+  } catch (error) {
+    console.error(error);
+    return null; // or whatever value you want to return in case of an error
+  }
+};
+async manageAuth(obj) {
 
-    async refreshToken(token) {
-        let t = await axios({
+  const data = new URLSearchParams({
+    client_id: config.client.id,
+    client_secret: config.client.secret,
+    grant_type: "authorization_code",
+    code: obj.code,
+    redirect_uri: config.client.redirect_uri,
+    scope: "identify guilds.join",
+  });
+
+  const fetch1 = await fetch("https://discord.com/api/oauth2/token", {
+    method: "POST",
+    body: data,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+  });
+
+  var result = await fetch1.json();
+  return result;
+}
+async refreshToken(token) {
+    try {
+        const response = await axios({
             method: "POST",
             url: "https://discordapp.com/api/oauth2/token",
             headers: {
@@ -121,12 +157,24 @@ class AuthClient {
                 "redirect_uri": config.client.redirect_uri,
                 "scope": "identify guilds.join"
             })
-        }).then(res => res.data);
-    
-        await userSchema.updateOne({ refreshToken: token }, { $set: { accessToken: t.access_token, refreshToken: t.refresh_token, expiresDate: Date.now() + t.expires_in } });
+        });
 
-        return t;
+        if (response.status === 200) {
+            const t = response.data;
+            await userSchema.updateOne({ refreshToken: token }, { $set: { accessToken: t.access_token, refreshToken: t.refresh_token, expiresDate: Date.now() + t.expires_in } });
+            return t;
+        } else {
+            // Handle non-200 status codes
+            console.error("Refresh token failed with status:", response.status);
+            throw new Error("Refresh token failed");
+        }
+    } catch (error) {
+        // Handle other errors
+        console.error("Error refreshing token:", error);
+        throw error;
     }
+}
+
 
 }
 
