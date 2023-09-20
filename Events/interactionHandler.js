@@ -22,10 +22,10 @@ const botSchema = require('../Schema/botSchema');
       await command.execute(interaction, client);
     } catch (error) {
       console.error(error);
-      return interaction.reply({
-        content: 'Komutu çalıştırırken hata ile karşılaştım geliştiricime ulaşın.',
-        ephemeral: true
-      });
+      // return interaction.reply({
+      //   content: 'Komutu çalıştırırken hata ile karşılaştım geliştiricime ulaşın.',
+      //   ephemeral: true
+      // });
     };
 
 }
